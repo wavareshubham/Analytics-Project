@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Club Social Media Analytics Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+
+  <!-- ==================== 1. WELCOME / LOGIN SCREEN ==================== -->
+  <div id="welcome-screen" class="welcome-screen">
+    <div class="welcome-card">
+      <div class="welcome-badge">
+        <span class="pulse-dot"></span> College Student Chapter Portal
+      </div>
+      
+      <div class="welcome-icon-wrapper">
+        <svg class="welcome-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="22" stroke="url(#paint0_linear)" stroke-width="3" stroke-dasharray="4 2"/>
+          <path d="M14 34L20 26L26 30L34 16" stroke="url(#paint1_linear)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="34" cy="16" r="3.5" fill="#4f46e5"/>
+          <circle cx="26" cy="30" r="2.5" fill="#6366f1"/>
+          <circle cx="20" cy="26" r="2.5" fill="#8b5cf6"/>
+          <circle cx="14" cy="34" r="2.5" fill="#a855f7"/>
+          <defs>
+            <linearGradient id="paint0_linear" x1="2" y1="2" x2="46" y2="46" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#4f46e5"/>
+              <stop offset="1" stop-color="#ec4899"/>
+            </linearGradient>
+            <linearGradient id="paint1_linear" x1="14" y1="16" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#4f46e5"/>
+              <stop offset="1" stop-color="#06b6d4"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <h1 class="welcome-title">College Club Analytics Portal</h1>
+      <p class="welcome-subtitle">
+        Sign in with your student chapter credentials to access multi-platform engagement telemetry, performance metrics, and sentiment insights.
+      </p>
+
+      <div class="welcome-features">
+        <div class="feature-chip">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          Multi-Platform Tracking
+        </div>
+        <div class="feature-chip">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          Sentiment Analysis
+        </div>
+        <div class="feature-chip">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          Automated Reports
+        </div>
+      </div>
+
+      <!-- Feedback / Error / Success Alert -->
+      <div id="login-alert" class="login-alert hidden" role="alert" aria-live="assertive"></div>
+      <div id="login-error-msg" class="login-error-msg hidden" style="display:none;" aria-live="polite"></div>
+
+      <!-- College Portal Login Form -->
+      <form id="login-form" class="login-form" novalidate autocomplete="on">
+        <div class="login-form-group">
+          <label for="login-username" class="login-label">
+            <span>Username</span>
+            <span class="required-star">*</span>
+          </label>
+          <div class="login-input-wrapper">
+            <span class="login-input-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+              </svg>
+            </span>
+            <input 
+              type="text" 
+              id="login-username" 
+              name="username" 
+              class="form-control login-input" 
+              placeholder="Enter Username" 
+              autocomplete="username" 
+              spellcheck="false" 
+              required>
+          </div>
+          <div id="login-username-feedback" class="login-feedback"></div>
+        </div>
+
+        <div class="login-form-group">
+          <label for="login-password" class="login-label">
+            <span>Password</span>
+            <span class="required-star">*</span>
+          </label>
+          <div class="login-input-wrapper">
+            <span class="login-input-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+              </svg>
+            </span>
+            <input 
+              type="password" 
+              id="login-password" 
+              name="password" 
+              class="form-control login-input login-input-password" 
+              placeholder="Enter Password" 
+              autocomplete="current-password" 
+              required>
+            <button 
+              type="button" 
+              id="toggle-password-btn" 
+              class="login-pwd-toggle" 
+              aria-label="Toggle password visibility" 
+              title="Show or hide password">
+              <svg id="pwd-eye-icon" viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+              </svg>
+              <svg id="pwd-eye-slash-icon" class="hidden" viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+                <path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd"/>
+                <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z"/>
+              </svg>
+            </button>
+          </div>
+          <div id="login-password-feedback" class="login-feedback"></div>
+        </div>
+
+        <div class="login-options-row">
+          <label class="login-remember-wrapper" for="login-remember">
+            <input type="checkbox" id="login-remember" name="remember" class="login-checkbox">
+            <span class="login-remember-text">Remember me</span>
+          </label>
+          <a href="#forgot" id="forgot-password-link" class="login-forgot-link">Forgot Password?</a>
+        </div>
+
+        <button type="submit" id="login-btn" class="btn btn-primary btn-lg login-submit-btn">
+          <span>Login</span>
+          <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+      </form>
+
+      <!-- Demo Credentials Helper Box -->
+      <div class="login-demo-hint">
+        <div class="demo-hint-title">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+          </svg>
+          Demo Portal Access
+        </div>
+        <div class="demo-hint-body">
+          <span>Username: <strong>Shubham</strong></span>
+          <span class="demo-hint-divider">&bull;</span>
+          <span>Password: <strong>RBT25CS049</strong></span>
+        </div>
+      </div>
+
+      <div class="welcome-note">
+        <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+        </svg>
+        College Project Demo Prototype &bull; Realistic Simulated Dataset
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. MAIN APP WRAPPER ==================== -->
+  <div id="app-container" class="app-container hidden">
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 20V10M12 20V4M6 20v-6"/>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <span class="brand-name">CampusPulse</span>
+          <span class="brand-tag">Club Analytics</span>
+        </div>
+        <button id="sidebar-close-btn" class="sidebar-toggle-btn mobile-only" aria-label="Close sidebar">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">MAIN MENU</div>
+        
+        <button class="nav-item active" data-section="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          <span>Dashboard</span>
+        </button>
+
+        <button class="nav-item" data-section="posts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+          </svg>
+          <span>Posts Analytics</span>
+          <span class="nav-badge" id="sidebar-posts-count">48</span>
+        </button>
+
+        <button class="nav-item" data-section="engagement">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          <span>Engagement</span>
+        </button>
+
+        <button class="nav-item" data-section="sentiment">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
+          <span>Sentiment Analysis</span>
+        </button>
+
+        <button class="nav-item" data-section="reports">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          <span>Reports</span>
+        </button>
+
+        <div class="nav-section-label">PREFERENCES</div>
+
+        <button class="nav-item" data-section="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+          </svg>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <!-- Active Club Card in Sidebar -->
+      <div class="sidebar-club-card">
+        <div class="sidebar-club-avatar" id="sidebar-club-avatar">CC</div>
+        <div class="sidebar-club-text">
+          <div class="sidebar-club-title" id="sidebar-club-name">Coding Club</div>
+          <div class="sidebar-club-sub" id="sidebar-club-meta">2,450 Followers</div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <button id="return-welcome-btn" class="btn-logout" title="Return to Welcome Screen">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span>Exit to Portal</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Sidebar Overlay for mobile -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- ==================== MAIN CONTENT AREA ==================== -->
+    <div class="main-wrapper">
+
+      <!-- ==================== TOP HEADER ==================== -->
+      <header class="top-header">
+        <div class="header-left">
+          <button id="mobile-menu-btn" class="icon-btn mobile-only" aria-label="Open navigation menu">
+            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+
+          <!-- GLOBAL SELECTORS -->
+          <div class="selectors-bar">
+            <!-- College Selector -->
+            <div class="selector-group">
+              <label for="college-select" class="selector-label">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13">
+                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                </svg>
+                College
+              </label>
+              <select id="college-select" class="header-select">
+                <option value="RSCOE" selected>Rajarshi Shahu College of Engineering</option>
+                <option value="COEP">COEP Technological University</option>
+                <option value="PCCOE">Pimpri Chinchwad College of Engineering</option>
+              </select>
+            </div>
+
+            <!-- Club / Chapter Selector -->
+            <div class="selector-group highlight-select">
+              <label for="club-select" class="selector-label">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13">
+                  <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
+                </svg>
+                Club / Chapter
+              </label>
+              <select id="club-select" class="header-select">
+                <option value="coding" selected>Coding Club</option>
+                <option value="aiml">AI &amp; ML Club</option>
+                <option value="robotics">Robotics Club</option>
+                <option value="ieee">IEEE Student Chapter</option>
+                <option value="ecell">Entrepreneurship Cell</option>
+              </select>
+            </div>
+
+            <!-- Platform Selector -->
+            <div class="selector-group">
+              <label for="platform-select" class="selector-label">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13">
+                  <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"/>
+                </svg>
+                Platform
+              </label>
+              <select id="platform-select" class="header-select">
+                <option value="all" selected>All Platforms</option>
+                <option value="instagram">Instagram</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="github">GitHub</option>
+                <option value="facebook">Facebook</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Live Indicator Badge -->
+          <div class="live-status-pill">
+            <span class="live-indicator"></span>
+            <span class="live-text" id="header-context-label">Coding Club (All)</span>
+          </div>
+
+          <!-- GitHub Project Link -->
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="icon-btn github-header-btn" title="View Chapter GitHub Repositories" aria-label="GitHub Repository">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </a>
+
+          <!-- Theme Toggle -->
+          <button id="theme-toggle-btn" class="icon-btn" title="Toggle Light / Dark Mode" aria-label="Toggle Theme">
+            <svg id="theme-icon-sun" class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg id="theme-icon-moon" class="theme-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+            </svg>
+          </button>
+
+          <!-- User Profile -->
+          <div class="user-profile">
+            <div class="user-avatar">AD</div>
+            <div class="user-details hide-on-mobile">
+              <span class="user-name">Club Lead</span>
+              <span class="user-role">Student Chapter Lead</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ==================== BODY CONTENT CONTAINER ==================== -->
+      <main class="content-container">
+
+        <!-- ==================== SECTION 1: DASHBOARD ==================== -->
+        <section id="section-dashboard" class="content-section active">
+          
+          <!-- Banner Alert Context -->
+          <div class="context-banner">
+            <div class="context-banner-text">
+              <span class="context-tag">Active View</span>
+              <span id="banner-college-name">Rajarshi Shahu College of Engineering</span> &bull; 
+              <strong id="banner-club-name">Coding Club</strong> &bull; 
+              <span id="banner-platform-name">All Platforms (Instagram, LinkedIn, Facebook)</span>
+            </div>
+            <div class="context-banner-actions">
+              <span class="sample-data-badge">Prototype Demo Data</span>
+            </div>
+          </div>
+
+          <!-- SUMMARY CARDS (6 CARDS) -->
+          <div class="summary-grid">
+            <!-- 1. Total Followers -->
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Total Followers</span>
+                <div class="stat-icon-wrap icon-purple">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 010 7.75"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="stat-value" id="card-followers">2,450</div>
+              <div class="stat-footer">
+                <span class="trend-badge trend-up" id="card-followers-trend">
+                  <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 3.5l4.5 4.5H9v4H7V8H3.5L8 3.5z"/></svg>
+                  +12.8%
+                </span>
+                <span class="stat-subtext">vs last month</span>
+              </div>
+            </div>
+
+            <!-- 2. Total Posts -->
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Total Posts</span>
+                <div class="stat-icon-wrap icon-blue">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="stat-value" id="card-posts">48</div>
+              <div class="stat-footer">
+                <span class="trend-badge trend-up" id="card-posts-trend">
+                  <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 3.5l4.5 4.5H9v4H7V8H3.5L8 3.5z"/></svg>
+                  +6 this mo
+                </span>
+                <span class="stat-subtext">across channels</span>
+              </div>
+            </div>
+
+            <!-- 3. Total Engagement -->
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Total Engagement</span>
+                <div class="stat-icon-wrap icon-indigo">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="stat-value" id="card-engagement">6,840</div>
+              <div class="stat-footer">
+                <span class="trend-badge trend-up" id="card-engagement-trend">
+                  <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 3.5l4.5 4.5H9v4H7V8H3.5L8 3.5z"/></svg>
+                  +18.4%
+                </span>
+                <span class="stat-subtext">interactions</span>
+              </div>
+            </div>
+
+            <!-- 4. Engagement Rate -->
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Engagement Rate</span>
+                <div class="stat-icon-wrap icon-cyan">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="stat-value" id="card-rate">8.4%</div>
+              <div class="stat-footer">
+                <span class="trend-badge trend-up" id="card-rate-trend">
+                  <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 3.5l4.5 4.5H9v4H7V8H3.5L8 3.5z"/></svg>
+                  +1.2%
+                </span>
+                <span class="stat-subtext">peer benchmark: 5.2%</span>
+              </div>
+            </div>
+
+            <!-- 5. Average Reach -->
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Average Reach</span>
+                <div class="stat-icon-wrap icon-emerald">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="stat-value" id="card-reach">4,120</div>
+              <div class="stat-footer">
+                <span class="trend-badge trend-up" id="card-reach-trend">
+                  <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 3.5l4.5 4.5H9v4H7V8H3.5L8 3.5z"/></svg>
+                  +24.1%
+                </span>
+                <span class="stat-subtext">per post avg</span>
+              </div>
+            </div>
+
+            <!-- 6. Positive Sentiment -->
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-label">Positive Sentiment</span>
+                <div class="stat-icon-wrap icon-amber">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                    <line x1="9" y1="9" x2="9.01" y2="9"/>
+                    <line x1="15" y1="9" x2="15.01" y2="9"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="stat-value" id="card-sentiment">72%</div>
+              <div class="stat-footer">
+                <span class="trend-badge trend-up" id="card-sentiment-trend">
+                  <svg viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M8 3.5l4.5 4.5H9v4H7V8H3.5L8 3.5z"/></svg>
+                  +4%
+                </span>
+                <span class="stat-subtext">favorable responses</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CHARTS GRID (4 VISUAL CHARTS) -->
+          <div class="charts-grid">
+            <!-- Chart 1: Weekly Engagement -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div>
+                  <h3 class="chart-title">Weekly Engagement Trend</h3>
+                  <p class="chart-subtitle">Daily interactions over the past 7 days</p>
+                </div>
+                <div class="chart-legend">
+                  <span class="legend-dot dot-primary"></span> Engagement
+                </div>
+              </div>
+              <div class="chart-container" id="weekly-chart-container">
+                <canvas id="weekly-chart" width="540" height="240"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 2: Followers Growth -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div>
+                  <h3 class="chart-title">Followers Growth (Last 6 Months)</h3>
+                  <p class="chart-subtitle">Monthly cumulative student followers</p>
+                </div>
+                <div class="chart-legend">
+                  <span class="legend-dot dot-cyan"></span> Growth
+                </div>
+              </div>
+              <div class="chart-container" id="growth-chart-container">
+                <canvas id="growth-chart" width="540" height="240"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 3: Sentiment Distribution Donut -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div>
+                  <h3 class="chart-title">Sentiment Distribution</h3>
+                  <p class="chart-subtitle">Audience feedback classification</p>
+                </div>
+                <span class="badge-pill">Simulated AI</span>
+              </div>
+              <div class="chart-container donut-layout" id="sentiment-chart-container">
+                <div class="donut-canvas-wrap">
+                  <canvas id="sentiment-donut" width="220" height="220"></canvas>
+                  <div class="donut-center-label">
+                    <span class="donut-number" id="donut-center-pct">72%</span>
+                    <span class="donut-sub">Positive</span>
+                  </div>
+                </div>
+                <div class="sentiment-legend-list" id="dashboard-sentiment-legend">
+                  <div class="legend-item">
+                    <span class="legend-dot dot-positive"></span>
+                    <span class="legend-name">Positive</span>
+                    <strong class="legend-pct" id="legend-pos-pct">72%</strong>
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-dot dot-neutral"></span>
+                    <span class="legend-name">Neutral</span>
+                    <strong class="legend-pct" id="legend-neu-pct">20%</strong>
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-dot dot-negative"></span>
+                    <span class="legend-name">Negative</span>
+                    <strong class="legend-pct" id="legend-neg-pct">8%</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart 4: Platform Performance Comparison -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div>
+                  <h3 class="chart-title">Platform Performance Comparison</h3>
+                  <p class="chart-subtitle">Followers &amp; Engagement by channel</p>
+                </div>
+                <div class="chart-legend">
+                  <span class="legend-dot dot-ig"></span> IG
+                  <span class="legend-dot dot-li"></span> LI
+                  <span class="legend-dot dot-gh"></span> GH
+                  <span class="legend-dot dot-fb"></span> FB
+                </div>
+              </div>
+              <div class="chart-container" id="platform-chart-container">
+                <canvas id="platform-bar-chart" width="540" height="240"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- RECENT HIGHLIGHTS ROW -->
+          <div class="dashboard-bottom-grid">
+            <!-- Best Performing Post Card -->
+            <div class="highlight-card">
+              <div class="highlight-header">
+                <div class="highlight-title-wrap">
+                  <span class="highlight-star">★</span>
+                  <h4 class="highlight-title">Top Performing Post</h4>
+                </div>
+                <span class="platform-badge" id="dash-top-post-platform">Instagram</span>
+              </div>
+              <h3 class="dash-top-post-name" id="dash-top-post-title">“Coding Workshop 2026: Hands-on Git &amp; Fullstack”</h3>
+              <p class="dash-top-post-caption" id="dash-top-post-caption">
+                Packed auditorium for our flagship annual coding workshop! 180+ student participants built live portfolio apps.
+              </p>
+              <div class="dash-top-metrics">
+                <div class="mini-metric">
+                  <span class="mini-label">Likes</span>
+                  <strong class="mini-val" id="dash-top-likes">480</strong>
+                </div>
+                <div class="mini-metric">
+                  <span class="mini-label">Comments</span>
+                  <strong class="mini-val" id="dash-top-comments">74</strong>
+                </div>
+                <div class="mini-metric">
+                  <span class="mini-label">Shares</span>
+                  <strong class="mini-val" id="dash-top-shares">52</strong>
+                </div>
+                <div class="mini-metric">
+                  <span class="mini-label">Views</span>
+                  <strong class="mini-val" id="dash-top-views">5,620</strong>
+                </div>
+                <div class="mini-metric score-highlight">
+                  <span class="mini-label">Engagement Score</span>
+                  <strong class="mini-val" id="dash-top-score">840.2</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Engagement Formula Callout -->
+            <div class="formula-card">
+              <div class="formula-header">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4v16h16"/>
+                  <path d="M4 12l6-6 4 4 6-6"/>
+                </svg>
+                <h4>Engagement Computation Engine</h4>
+              </div>
+              <p class="formula-desc">Official weighted formula for measuring cross-platform college student interaction:</p>
+              <div class="formula-code">
+                <code>Engagement Score = Likes + (2 &times; Comments) + (3 &times; Shares) + (Views / 100)</code>
+              </div>
+              <div class="formula-weights">
+                <div class="weight-badge"><span class="w-num">1&times;</span> Likes</div>
+                <div class="weight-badge"><span class="w-num">2&times;</span> Comments</div>
+                <div class="weight-badge"><span class="w-num">3&times;</span> Shares</div>
+                <div class="weight-badge"><span class="w-num">1%</span> Views</div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ==================== SECTION 2: POSTS ANALYTICS ==================== -->
+        <section id="section-posts" class="content-section">
+          <div class="section-top-header">
+            <div>
+              <h2 class="section-title">Posts Analytics</h2>
+              <p class="section-subtitle">Comprehensive catalog of recent social-media publications and engagement telemetry</p>
+            </div>
+            <div class="post-stats-pill">
+              Showing <strong id="posts-filtered-count">0</strong> of <strong id="posts-total-count">0</strong> Posts
+            </div>
+          </div>
+
+          <!-- TOOLBAR: SEARCH, PLATFORM FILTER, SORT -->
+          <div class="posts-toolbar">
+            <div class="search-box">
+              <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+              </svg>
+              <input type="text" id="posts-search-input" placeholder="Search post title, topic, or hashtag..." autocomplete="off">
+              <button id="clear-search-btn" class="clear-search-btn hidden" title="Clear search">&times;</button>
+            </div>
+
+            <div class="filter-controls">
+              <div class="filter-group">
+                <label for="posts-platform-filter">Platform:</label>
+                <select id="posts-platform-filter" class="table-filter-select">
+                  <option value="all">All Channels</option>
+                  <option value="instagram">Instagram</option>
+                  <option value="linkedin">LinkedIn</option>
+                  <option value="github">GitHub</option>
+                  <option value="facebook">Facebook</option>
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <label for="posts-sort-select">Sort By:</label>
+                <select id="posts-sort-select" class="table-filter-select">
+                  <option value="score-desc" selected>Engagement Score (Highest)</option>
+                  <option value="score-asc">Engagement Score (Lowest)</option>
+                  <option value="date-desc">Date (Newest)</option>
+                  <option value="date-asc">Date (Oldest)</option>
+                  <option value="likes-desc">Likes (Highest)</option>
+                  <option value="views-desc">Views (Highest)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- POSTS TABLE / CARD CONTAINER -->
+          <div class="table-card">
+            <div class="table-responsive">
+              <table class="data-table" id="posts-table">
+                <thead>
+                  <tr>
+                    <th>Post Title &amp; Details</th>
+                    <th>Platform</th>
+                    <th>Date</th>
+                    <th class="num-col">Likes</th>
+                    <th class="num-col">Comments</th>
+                    <th class="num-col">Shares</th>
+                    <th class="num-col">Views</th>
+                    <th class="num-col">Engagement Score</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="posts-tbody">
+                  <!-- Injected via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="posts-empty-state" class="empty-state hidden">
+              <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <h4>No matching posts found</h4>
+              <p>Try modifying your search keywords or resetting the platform filter.</p>
+              <button id="reset-posts-filter-btn" class="btn btn-secondary btn-sm">Reset Filters</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== SECTION 3: ENGAGEMENT ANALYSIS ==================== -->
+        <section id="section-engagement" class="content-section">
+          <div class="section-top-header">
+            <div>
+              <h2 class="section-title">Engagement Analysis</h2>
+              <p class="section-subtitle">Multi-channel student reach, interaction telemetry, and cross-platform metric comparison</p>
+            </div>
+            <div class="status-chip">Formula Standard v2.4</div>
+          </div>
+
+          <!-- FORMULA BANNER -->
+          <div class="formula-banner">
+            <div class="formula-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+              </svg>
+            </div>
+            <div class="formula-content">
+              <span class="formula-title-tag">STANDARDIZED SCORING FORMULA</span>
+              <div class="formula-math">
+                Engagement Score = Likes + (2 &times; Comments) + (3 &times; Shares) + (Views / 100)
+              </div>
+              <p class="formula-sub">
+                This weighted index gives double significance to student discussions (comments), triple significance to virality (shares), and normalizes broad reach (views).
+              </p>
+            </div>
+          </div>
+
+          <!-- METRICS BREAKDOWN CARDS -->
+          <div class="engagement-metrics-row">
+            <div class="eng-stat-tile">
+              <span class="eng-tile-label">Total Likes</span>
+              <span class="eng-tile-value" id="eng-total-likes">4,280</span>
+              <div class="eng-tile-bar"><div class="bar-fill fill-blue" style="width: 78%"></div></div>
+              <span class="eng-tile-sub">Weighted: 1.0&times; per like</span>
+            </div>
+
+            <div class="eng-stat-tile">
+              <span class="eng-tile-label">Total Comments</span>
+              <span class="eng-tile-value" id="eng-total-comments">720</span>
+              <div class="eng-tile-bar"><div class="bar-fill fill-indigo" style="width: 62%"></div></div>
+              <span class="eng-tile-sub">Weighted: 2.0&times; (1,440 pts)</span>
+            </div>
+
+            <div class="eng-stat-tile">
+              <span class="eng-tile-label">Total Shares</span>
+              <span class="eng-tile-value" id="eng-total-shares">410</span>
+              <div class="eng-tile-bar"><div class="bar-fill fill-purple" style="width: 50%"></div></div>
+              <span class="eng-tile-sub">Weighted: 3.0&times; (1,230 pts)</span>
+            </div>
+
+            <div class="eng-stat-tile">
+              <span class="eng-tile-label">Total Views</span>
+              <span class="eng-tile-value" id="eng-total-views">42,800</span>
+              <div class="eng-tile-bar"><div class="bar-fill fill-cyan" style="width: 85%"></div></div>
+              <span class="eng-tile-sub">Views/100 (428 pts)</span>
+            </div>
+
+            <div class="eng-stat-tile highlight-tile">
+              <span class="eng-tile-label">Overall Engagement Rate</span>
+              <span class="eng-tile-value text-primary" id="eng-rate-display">8.4%</span>
+              <div class="eng-tile-bar"><div class="bar-fill fill-primary" style="width: 84%"></div></div>
+              <span class="eng-tile-sub">High student resonance</span>
+            </div>
+          </div>
+
+          <!-- PLATFORM COMPARISON PROGRESS BARS & CARDS -->
+          <div class="platform-breakdown-grid">
+            <!-- Instagram Card -->
+            <div class="platform-card platform-ig">
+              <div class="platform-card-top">
+                <div class="platform-icon-name">
+                  <div class="platform-logo ig-logo">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4>Instagram</h4>
+                    <span class="platform-meta-tag">Campus Stories &amp; Reels</span>
+                  </div>
+                </div>
+                <div class="share-pct" id="ig-share-pct">54% Share</div>
+              </div>
+              <div class="platform-stat-row">
+                <span>Followers:</span>
+                <strong id="ig-followers">1,320</strong>
+              </div>
+              <div class="platform-stat-row">
+                <span>Engagement Score:</span>
+                <strong id="ig-score">3,690</strong>
+              </div>
+              <div class="platform-stat-row">
+                <span>Engagement Rate:</span>
+                <strong class="text-positive" id="ig-rate">9.8%</strong>
+              </div>
+              <div class="progress-container">
+                <div class="progress-bar-wrap">
+                  <div class="prog-bar bg-ig" id="ig-prog" style="width: 75%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- LinkedIn Card -->
+            <div class="platform-card platform-li">
+              <div class="platform-card-top">
+                <div class="platform-icon-name">
+                  <div class="platform-logo li-logo">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4>LinkedIn</h4>
+                    <span class="platform-meta-tag">Professional &amp; Alumni</span>
+                  </div>
+                </div>
+                <div class="share-pct" id="li-share-pct">32% Share</div>
+              </div>
+              <div class="platform-stat-row">
+                <span>Followers:</span>
+                <strong id="li-followers">780</strong>
+              </div>
+              <div class="platform-stat-row">
+                <span>Engagement Score:</span>
+                <strong id="li-score">2,190</strong>
+              </div>
+              <div class="platform-stat-row">
+                <span>Engagement Rate:</span>
+                <strong class="text-positive" id="li-rate">7.4%</strong>
+              </div>
+              <div class="progress-container">
+                <div class="progress-bar-wrap">
+                  <div class="prog-bar bg-li" id="li-prog" style="width: 55%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- GitHub Card -->
+            <div class="platform-card platform-gh">
+              <div class="platform-card-top">
+                <div class="platform-icon-name">
+                  <div class="platform-logo gh-logo">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4>GitHub</h4>
+                    <span class="platform-meta-tag">Code Repos &amp; Open Source</span>
+                  </div>
+                </div>
+                <div class="share-pct" id="gh-share-pct">22% Share</div>
+              </div>
+              <div class="platform-stat-row">
+                <span>Stargazers &amp; Watchers:</span>
+                <strong id="gh-followers">620</strong>
+              </div>
+              <div class="platform-stat-row">
+                <span>Engagement Score:</span>
+                <strong id="gh-score">1,820</strong>
+              </div>
+              <div class="platform-stat-row">
+                <span>Engagement Rate:</span>
+                <strong class="text-positive" id="gh-rate">9.2%</strong>
+              </div>
+              <div class="progress-container">
+                <div class="progress-bar-wrap">
+                  <div class="prog-bar bg-gh" id="gh-prog" style="width: 45%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Facebook Card -->
+            <div class="platform-card platform-fb">
+              <div class="platform-card-top">
+                <div class="platform-icon-name">
+                  <div class="platform-logo fb-logo">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                      <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4>Facebook</h4>
+                    <span class="platform-meta-tag">Community &amp; College Groups</span>
+                  </div>
+                </div>
+                <div class="share-pct" id="fb-share-pct">14% Share</div>
+              </div>
+              <div class="platform-stat-row">
+                <span>Followers:</span>
+                <strong id="fb-followers">350</strong>
+              </div>
+              <div class="platform-stat-row">
+                <span>Engagement Score:</span>
+                <strong id="fb-score">960</strong>
+              </div>
+              <div class="platform-stat-row">
+                <span>Engagement Rate:</span>
+                <strong class="text-positive" id="fb-rate">5.8%</strong>
+              </div>
+              <div class="progress-container">
+                <div class="progress-bar-wrap">
+                  <div class="prog-bar bg-fb" id="fb-prog" style="width: 35%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AUDIENCE ACTIVITY INSIGHTS -->
+          <div class="engagement-insights-grid">
+            <div class="insight-box">
+              <div class="insight-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <div>
+                <h5>Optimal Posting Windows</h5>
+                <p>Wednesday &amp; Friday, 5:30 PM - 7:45 PM yields <strong>42% higher interactions</strong> after college lab sessions conclude.</p>
+              </div>
+            </div>
+
+            <div class="insight-box">
+              <div class="insight-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="23 7 16 12 23 17 23 7"/>
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                </svg>
+              </div>
+              <div>
+                <h5>Highest Impact Content Format</h5>
+                <p>Short carousel summaries of live workshops generate <strong>3.2&times; more shares</strong> than static single posters.</p>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ==================== SECTION 4: SENTIMENT ANALYSIS ==================== -->
+        <section id="section-sentiment" class="content-section">
+          <div class="section-top-header">
+            <div>
+              <h2 class="section-title">Sentiment Analysis</h2>
+              <p class="section-subtitle">Student sentiment telemetry evaluated across post feedback and comment discussions</p>
+            </div>
+            <div class="disclaimer-badge">Prototype Demonstration &bull; Simulated NLP</div>
+          </div>
+
+          <!-- PROTOTYPE DISCLAIMER ALERT BANNER -->
+          <div class="alert-info-banner">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+            </svg>
+            <div>
+              <strong>Demonstration Prototype Note:</strong>
+              This module showcases the UX architecture for sentiment monitoring. In production, this connects to an NLP classification endpoint. All sentiment scores below represent benchmarked demo datasets.
+            </div>
+          </div>
+
+          <!-- SENTIMENT SUMMARY METRICS -->
+          <div class="sentiment-summary-grid">
+            <!-- Circular Progress Donut Area -->
+            <div class="sentiment-card-donut">
+              <div class="sentiment-card-title">Overall Sentiment Breakdown</div>
+              <div class="sentiment-donut-large">
+                <canvas id="sentiment-donut-large" width="240" height="240"></canvas>
+                <div class="large-donut-label">
+                  <span class="large-pct" id="sent-page-pos-pct">68%</span>
+                  <span class="large-text">Positive</span>
+                </div>
+              </div>
+              <div class="sentiment-pills-row">
+                <div class="sent-stat-pill pill-pos">
+                  <span class="sent-indicator bg-pos"></span>
+                  <span>Positive</span>
+                  <strong id="sent-val-pos">68%</strong>
+                </div>
+                <div class="sent-stat-pill pill-neu">
+                  <span class="sent-indicator bg-neu"></span>
+                  <span>Neutral</span>
+                  <strong id="sent-val-neu">24%</strong>
+                </div>
+                <div class="sent-stat-pill pill-neg">
+                  <span class="sent-indicator bg-neg"></span>
+                  <span>Negative</span>
+                  <strong id="sent-val-neg">8%</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sentiment Drivers & Keyword Tags -->
+            <div class="sentiment-drivers-card">
+              <div class="sentiment-card-title">Audience Resonance &amp; Topics</div>
+              <p class="sentiment-drivers-desc">
+                High frequency keywords detected in student responses to recent club bootcamps, workshops, and announcements:
+              </p>
+              
+              <div class="keywords-cloud">
+                <span class="kw-tag kw-pos">Hands-on (+94%)</span>
+                <span class="kw-tag kw-pos">Inspiring (+88%)</span>
+                <span class="kw-tag kw-pos">Clear explanation (+82%)</span>
+                <span class="kw-tag kw-neu">Registration query (neu)</span>
+                <span class="kw-tag kw-pos">Great speakers (+91%)</span>
+                <span class="kw-tag kw-neu">Certificate status (neu)</span>
+                <span class="kw-tag kw-neg">Auditorium seats filled (-14%)</span>
+                <span class="kw-tag kw-pos">Practical demo (+85%)</span>
+                <span class="kw-tag kw-neg">Audio echo in back row (-8%)</span>
+              </div>
+
+              <div class="sentiment-action-alert">
+                <div class="action-alert-header">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>Student Feedback Actionable Item</span>
+                </div>
+                <p>
+                  Positive sentiment is driven by live practical exercises. Ensure registration links have auto-waitlist support to prevent auditorium capacity complaints.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- SAMPLE COMMENTS SECTION -->
+          <div class="comments-section-card">
+            <div class="comments-header">
+              <div>
+                <h3 class="comments-title">Sample Comment Stream with Sentiment Classification</h3>
+                <p class="comments-subtitle">Real-time parsed comments across Instagram, LinkedIn, and Facebook</p>
+              </div>
+              <div class="comment-filter-pills">
+                <button class="filter-pill active" data-sentiment-filter="all">All Comments</button>
+                <button class="filter-pill" data-sentiment-filter="positive">Positive</button>
+                <button class="filter-pill" data-sentiment-filter="neutral">Neutral</button>
+                <button class="filter-pill" data-sentiment-filter="negative">Negative</button>
+              </div>
+            </div>
+
+            <!-- Comments List -->
+            <div class="comments-list" id="comments-list-container">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ==================== SECTION 5: REPORTS ==================== -->
+        <section id="section-reports" class="content-section">
+          <div class="section-top-header">
+            <div>
+              <h2 class="section-title">Performance Reports</h2>
+              <p class="section-subtitle">Formal executive report generated for club faculty advisors, student council, and department leads</p>
+            </div>
+            
+            <!-- ACTION BUTTONS -->
+            <div class="report-actions-bar">
+              <button id="btn-generate-report" class="btn btn-secondary">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M23 4v6h-6M1 20v-6h6"/>
+                  <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+                </svg>
+                <span>Generate Report</span>
+              </button>
+
+              <button id="btn-print-report" class="btn btn-primary">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 6 2 18 2 18 9"/>
+                  <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
+                  <rect x="6" y="14" width="12" height="8"/>
+                </svg>
+                <span>Print Report</span>
+              </button>
+
+              <button id="btn-download-report" class="btn btn-secondary">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>Download Report (CSV)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- PRINTABLE REPORT DOCUMENT CONTAINER -->
+          <div id="printable-report-area" class="report-paper">
+            <!-- Report Header -->
+            <div class="report-doc-header">
+              <div class="report-doc-brand">
+                <div class="report-doc-logo">
+                  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#4f46e5" stroke-width="2.5">
+                    <path d="M18 20V10M12 20V4M6 20v-6"/>
+                  </svg>
+                </div>
+                <div>
+                  <h1 class="report-doc-title">Social Media Performance &amp; Engagement Report</h1>
+                  <p class="report-doc-college" id="rep-college-display">Rajarshi Shahu College of Engineering</p>
+                </div>
+              </div>
+              <div class="report-doc-meta">
+                <div class="report-meta-item">
+                  <span class="meta-label">Generated On:</span>
+                  <span class="meta-val" id="rep-date-display">October 28, 2026</span>
+                </div>
+                <div class="report-meta-item">
+                  <span class="meta-label">Club / Chapter:</span>
+                  <strong class="meta-val text-primary" id="rep-club-display">Coding Club</strong>
+                </div>
+                <div class="report-meta-item">
+                  <span class="meta-label">Selected Channel:</span>
+                  <span class="meta-val" id="rep-platform-display">All Platforms</span>
+                </div>
+                <div class="report-meta-item">
+                  <span class="meta-label">Report ID:</span>
+                  <span class="meta-val" id="rep-id-display">REP-RSCOE-CC-2026</span>
+                </div>
+              </div>
+            </div>
+
+            <hr class="report-divider">
+
+            <!-- Executive Summary Metrics Grid -->
+            <div class="report-section-heading">1. Executive Metric Summary</div>
+            <div class="report-stats-grid">
+              <div class="rep-stat-box">
+                <span class="rep-stat-label">Total Student Followers</span>
+                <span class="rep-stat-val" id="rep-followers">2,450</span>
+                <span class="rep-stat-sub">Across active social profiles</span>
+              </div>
+              <div class="rep-stat-box">
+                <span class="rep-stat-label">Published Posts</span>
+                <span class="rep-stat-val" id="rep-posts">48</span>
+                <span class="rep-stat-sub">Total catalog count</span>
+              </div>
+              <div class="rep-stat-box">
+                <span class="rep-stat-label">Total Engagement Score</span>
+                <span class="rep-stat-val" id="rep-engagement">6,840</span>
+                <span class="rep-stat-sub">Weighted interaction index</span>
+              </div>
+              <div class="rep-stat-box">
+                <span class="rep-stat-label">Average Engagement Rate</span>
+                <span class="rep-stat-val" id="rep-rate">8.4%</span>
+                <span class="rep-stat-sub">Industry baseline: 4-6%</span>
+              </div>
+              <div class="rep-stat-box">
+                <span class="rep-stat-label">Positive Sentiment</span>
+                <span class="rep-stat-val" id="rep-sentiment">72%</span>
+                <span class="rep-stat-sub">Favorable student feedback</span>
+              </div>
+            </div>
+
+            <!-- Best Performing Post Details in Report -->
+            <div class="report-section-heading">2. Best Performing Post Spotlight</div>
+            <div class="rep-best-post-card">
+              <div class="rep-post-header">
+                <div>
+                  <h4 class="rep-post-title" id="rep-best-title">“Coding Workshop 2026: Hands-on Git &amp; Fullstack”</h4>
+                  <span class="rep-post-date" id="rep-best-date">Published: October 14, 2026</span>
+                </div>
+                <span class="platform-badge" id="rep-best-platform">Instagram</span>
+              </div>
+              <p class="rep-post-summary" id="rep-best-summary">
+                Flagship hands-on coding workshop with record turnouts, 180+ active participants, and maximum cross-platform virality.
+              </p>
+              <div class="rep-post-stats">
+                <div class="rep-mini-metric">
+                  <span class="lbl">Likes</span>
+                  <strong id="rep-best-likes">480</strong>
+                </div>
+                <div class="rep-mini-metric">
+                  <span class="lbl">Comments</span>
+                  <strong id="rep-best-comments">74</strong>
+                </div>
+                <div class="rep-mini-metric">
+                  <span class="lbl">Shares</span>
+                  <strong id="rep-best-shares">52</strong>
+                </div>
+                <div class="rep-mini-metric">
+                  <span class="lbl">Views</span>
+                  <strong id="rep-best-views">5,620</strong>
+                </div>
+                <div class="rep-mini-metric highlight">
+                  <span class="lbl">Engagement Score</span>
+                  <strong id="rep-best-score">840.2</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sentiment & Channel Breakdown in Report -->
+            <div class="report-columns-2">
+              <div class="rep-col-box">
+                <div class="report-section-heading">3. Sentiment Summary</div>
+                <div class="rep-sentiment-table">
+                  <div class="rep-sent-row">
+                    <span>Positive Resonance</span>
+                    <strong class="text-positive" id="rep-sent-pos">72%</strong>
+                  </div>
+                  <div class="rep-sent-row">
+                    <span>Neutral Inquiries</span>
+                    <strong id="rep-sent-neu">20%</strong>
+                  </div>
+                  <div class="rep-sent-row">
+                    <span>Negative / Logistics</span>
+                    <strong class="text-danger" id="rep-sent-neg">8%</strong>
+                  </div>
+                </div>
+                <p class="rep-col-desc">
+                  Students predominantly highlighted practical skills gained, high mentor responsiveness, and clear explanations.
+                </p>
+              </div>
+
+              <div class="rep-col-box">
+                <div class="report-section-heading">4. Platform Share Breakdown</div>
+                <div class="rep-sentiment-table">
+                  <div class="rep-sent-row">
+                    <span>Instagram (Visual &amp; Reels)</span>
+                    <strong id="rep-share-ig">42%</strong>
+                  </div>
+                  <div class="rep-sent-row">
+                    <span>LinkedIn (Alumni &amp; Professional)</span>
+                    <strong id="rep-share-li">26%</strong>
+                  </div>
+                  <div class="rep-sent-row">
+                    <span>GitHub (Open Source &amp; Code Repos)</span>
+                    <strong id="rep-share-gh">22%</strong>
+                  </div>
+                  <div class="rep-sent-row">
+                    <span>Facebook (Campus Groups)</span>
+                    <strong id="rep-share-fb">10%</strong>
+                  </div>
+                </div>
+                <p class="rep-col-desc">
+                  Instagram remains the primary engagement channel for college students, while LinkedIn drives alumni mentorship leads.
+                </p>
+              </div>
+            </div>
+
+            <!-- Faculty / Chapter Recommendations -->
+            <div class="report-section-heading">5. Actionable Recommendations for Chapter Leads</div>
+            <ul class="report-recs-list">
+              <li><strong>Prioritize Video Recaps:</strong> 30-second post-event reels yield 2.8&times; higher share rates than still images.</li>
+              <li><strong>Alumni Spotlight on LinkedIn:</strong> Schedule bi-weekly alumni career transitions to elevate LinkedIn engagement score.</li>
+              <li><strong>Pre-Event Q&amp;A Stories:</strong> Conduct Instagram story polls 48 hours prior to workshops to resolve venue capacity questions.</li>
+            </ul>
+
+            <!-- Report Sign-off Footer -->
+            <div class="report-signoff-row">
+              <div class="signoff-box">
+                <div class="signoff-line"></div>
+                <span class="signoff-title">Prepared by: Student Chapter Social Lead</span>
+              </div>
+              <div class="signoff-box">
+                <div class="signoff-line"></div>
+                <span class="signoff-title">Reviewed by: Faculty Advisor / Department Head</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== SECTION 6: SETTINGS ==================== -->
+        <section id="section-settings" class="content-section">
+          <div class="section-top-header">
+            <div>
+              <h2 class="section-title">Settings &amp; Preferences</h2>
+              <p class="section-subtitle">Configure your default college organization, active club, and user interface preferences</p>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <form id="settings-form">
+              <!-- College Setting -->
+              <div class="form-group">
+                <label for="settings-college" class="form-label">Default College / University</label>
+                <select id="settings-college" class="form-control">
+                  <option value="RSCOE">Rajarshi Shahu College of Engineering (RSCOE)</option>
+                  <option value="COEP">COEP Technological University</option>
+                  <option value="PCCOE">Pimpri Chinchwad College of Engineering (PCCOE)</option>
+                </select>
+                <small class="form-help">Selected campus organization loaded automatically on application startup.</small>
+              </div>
+
+              <!-- Club Setting -->
+              <div class="form-group">
+                <label for="settings-club" class="form-label">Default Club / Student Chapter</label>
+                <select id="settings-club" class="form-control">
+                  <option value="coding">Coding Club</option>
+                  <option value="aiml">AI &amp; ML Club</option>
+                  <option value="robotics">Robotics Club</option>
+                  <option value="ieee">IEEE Student Chapter</option>
+                  <option value="ecell">Entrepreneurship Cell</option>
+                </select>
+                <small class="form-help">Your primary student organization dashboard view.</small>
+              </div>
+
+              <!-- Default Platform Setting -->
+              <div class="form-group">
+                <label for="settings-platform" class="form-label">Default Social Media Filter</label>
+                <select id="settings-platform" class="form-control">
+                  <option value="all">All Platforms (Combined View)</option>
+                  <option value="instagram">Instagram</option>
+                  <option value="linkedin">LinkedIn</option>
+                  <option value="github">GitHub</option>
+                  <option value="facebook">Facebook</option>
+                </select>
+              </div>
+
+              <!-- GitHub Organization Handle Setting -->
+              <div class="form-group">
+                <label for="settings-github" class="form-label">Club GitHub Organization / Repository URL</label>
+                <input type="text" id="settings-github" class="form-control" placeholder="https://github.com/rscoe-coding-club" value="https://github.com/rscoe-coding-club">
+                <small class="form-help">Link to student chapter source repositories and hackathon project codebases.</small>
+              </div>
+
+              <!-- Theme Setting -->
+              <div class="form-group">
+                <label class="form-label">Theme Mode Preference</label>
+                <div class="theme-radio-group">
+                  <label class="radio-card">
+                    <input type="radio" name="settings-theme" value="light" checked>
+                    <div class="radio-card-content">
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                      </svg>
+                      <div>
+                        <strong>Light Theme</strong>
+                        <p>Crisp, modern high-contrast design</p>
+                      </div>
+                    </div>
+                  </label>
+
+                  <label class="radio-card">
+                    <input type="radio" name="settings-theme" value="dark">
+                    <div class="radio-card-content">
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                      </svg>
+                      <div>
+                        <strong>Dark Theme</strong>
+                        <p>Comfortable low-glare viewing</p>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Persistence Info -->
+              <div class="form-group">
+                <div class="storage-info-box">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+                    <path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z" clip-rule="evenodd"/>
+                  </svg>
+                  <div>
+                    <strong>Browser LocalStorage Storage:</strong>
+                    Preferences are stored directly in your browser's local sandbox and persist across reloads without any external server tracking.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Form Buttons -->
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>Save Settings</span>
+                </button>
+                <button type="button" id="btn-reset-settings" class="btn btn-secondary">
+                  <span>Reset to Defaults</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- ==================== FOOTER ==================== -->
+      <footer class="app-footer">
+        <div class="footer-inner">
+          <p>College Club Social Media Analytics &mdash; Prototype</p>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer-gh-link" title="Open GitHub Project Repository">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            <span>GitHub Repository</span>
+          </a>
+        </div>
+      </footer>
+
+    </div> <!-- /main-wrapper -->
+  </div> <!-- /app-container -->
+
+  <!-- ==================== POST DETAILS MODAL ==================== -->
+  <div id="post-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <span class="platform-badge" id="modal-platform-badge">Instagram</span>
+          <span class="modal-date" id="modal-post-date">October 14, 2026</span>
+        </div>
+        <button id="modal-close-btn" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <h3 class="modal-title" id="modal-post-title">Post Title</h3>
+        <p class="modal-caption" id="modal-post-caption">Post description...</p>
+        
+        <div class="modal-metrics-grid">
+          <div class="modal-metric-box">
+            <span class="metric-label">Likes</span>
+            <strong class="metric-val" id="modal-likes">0</strong>
+          </div>
+          <div class="modal-metric-box">
+            <span class="metric-label">Comments</span>
+            <strong class="metric-val" id="modal-comments">0</strong>
+          </div>
+          <div class="modal-metric-box">
+            <span class="metric-label">Shares</span>
+            <strong class="metric-val" id="modal-shares">0</strong>
+          </div>
+          <div class="modal-metric-box">
+            <span class="metric-label">Views</span>
+            <strong class="metric-val" id="modal-views">0</strong>
+          </div>
+        </div>
+
+        <div class="modal-score-banner">
+          <div class="score-calc-left">
+            <span>Engagement Formula Score:</span>
+            <div class="score-formula-hint">Likes + (2 &times; Comments) + (3 &times; Shares) + (Views / 100)</div>
+          </div>
+          <div class="score-badge-large" id="modal-score">0.0</div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="modal-dismiss-btn" class="btn btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- JavaScript Application Entry -->
+  <script src="script.js"></script>
+</body>
+</html>
